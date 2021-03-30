@@ -15,7 +15,7 @@ import (
 func main()	{
 	filename, duration := initFlags()
 	workingDir, _ := os.Getwd()
-	questions := parseCSV(workingDir + "\\data\\"+ filename + ".csv")
+	questions := openAndParseCsv(workingDir + "\\data\\"+ filename + ".csv")
 	startGame(questions, duration)
 }
 
@@ -69,15 +69,18 @@ func initFlags() (string, int) {
 	return filename, duration
 }
 
-func parseCSV(filepath string) map[string]string {
+func openAndParseCsv(filepath string) map[string]string {
 	file, err := os.Open(filepath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
+	return parseCSV(file)
+}
 
-	r := csv.NewReader(file)
+func parseCSV(reader io.Reader) map[string]string {
+	r := csv.NewReader(reader)
 	questions := make(map[string]string) 
 
 	for {
