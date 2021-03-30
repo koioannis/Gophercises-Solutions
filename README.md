@@ -7,4 +7,4 @@ This repo contains my solutions to the exercises.
 
 | Project     | Description 
 | :---       |    :----   
-| [CLI Quiz game](https://github.com/koioannis/Gophercises-Solutions/tree/main/quiz_game)      | A CLI Quiz Game that get the questions and answers from a CSV File
+| [CLI Quiz game](https://github.com/koioannis/Gophercises-Solutions/tree/main/quiz_game)      | A CLI Quiz Game that gets the questions and answers from a CSV File.
