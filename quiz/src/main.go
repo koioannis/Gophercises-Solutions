@@ -24,7 +24,7 @@ func startGame(questions map[string]string, duration int) {
 	
 	timer := time.NewTimer(time.Duration(duration) * time.Second)
 	for key, val := range questions {
-		// this many not work in unix terminals
+		// this many not work on unix terminals
 		fmt.Printf("\033[H\033[2JProblem #%v: %v = ", currentQuestion, key)
 		answerCh := make(chan string)
 		go parseUserInput(answerCh)
