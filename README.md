@@ -8,3 +8,4 @@ This repo contains my solutions to the exercises.
 | Project     | Description 
 | :---       |    :----   
 | [CLI Quiz game](https://github.com/koioannis/Gophercises-Solutions/tree/main/quiz_game)      | A CLI Quiz Game that gets the questions and answers from a CSV File.
+| [URL Shortener](https://github.com/koioannis/Gophercises-Solutions/tree/main/url_shortener) | A URL Shortener that gets the  short & full urls from a yson or yaml file |
