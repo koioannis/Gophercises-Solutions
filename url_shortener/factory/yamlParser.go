@@ -10,7 +10,7 @@ func newYAMLParser() *YAMLParser {
 
 // TODO: Refactor this, there must be a more performant way
 func (yp YAMLParser) Parse(data []byte) (map[string]string, error) {
-	var config config
+	var config rawData
 	err := yaml.Unmarshal(data, &config)
 	if err != nil {
 		return nil, err

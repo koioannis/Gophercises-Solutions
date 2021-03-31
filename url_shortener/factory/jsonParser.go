@@ -11,11 +11,11 @@ func newJSONParser() *JSONParser {
 }
 
 func (jp JSONParser) Parse(data []byte) (map[string]string, error) {
-	var config config
-	err := json.Unmarshal(data, &config)
+	var rawData rawData
+	err := json.Unmarshal(data, &rawData)
 	if err != nil {
 		return nil, err
 	}
 
-	return structToMap(config), nil
+	return structToMap(rawData), nil
 }
