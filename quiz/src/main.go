@@ -56,7 +56,7 @@ func parseUserInput(ch chan<- string) {
 }
 
 func initFlags() (string, int) {
-	csvHelpMessage := "The filename of the csv under the data folder, extension excluded"
+	csvHelpMessage	 "The filename of the csv under the data folder, extension excluded"
 	durationHelpMessage := "The total duration of the game"
 
 	var filename string
