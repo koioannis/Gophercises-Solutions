@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"koioannis/gopherices/url_shortener/factory"
 	"net/http"
@@ -10,7 +9,6 @@ import (
 func readFile(filename string) ([]byte, error) {
 	data, err := ioutil.ReadFile("data/" + filename)
 	if err != nil {
-		fmt.Println("WARNING: File not found, default urls will be used")
 		return nil, err
 	}
 
@@ -19,11 +17,8 @@ func readFile(filename string) ([]byte, error) {
 
 func getHandler(format string, filename string, fallback http.Handler) (http.HandlerFunc, error) {
 	parser, err := factory.GetParser(format)
-	if err != nil {
-		return nil, err
-	}
-
-	if format == "map" {
+	if err != nil || format == "map" {
+		parser, _ = factory.GetParser("map")
 		return buildHandler(parser, nil, fallback)
 	}
 

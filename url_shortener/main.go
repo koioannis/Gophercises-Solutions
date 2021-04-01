@@ -11,15 +11,26 @@ import (
 func main() {
 	mux := defaultMux()
 	filename := initFlags()
-	format := strings.Split(filepath.Ext(filename), ".")[1]
+	format := getFileExt(filename)
 
 	handler, err := getHandler(format, filename, mux)
 	if err != nil {
-		panic(err)
+		fmt.Println("WARNING: File not supported, defaults will be used")
 	}
 
 	fmt.Println("Starting the server on :3000")
 	http.ListenAndServe(":3000", handler)
+}
+
+func getFileExt(filename string) string {
+	fileExt := filepath.Ext(filename)
+
+	if len(fileExt) != 0 {
+		return strings.Split(fileExt, ".")[1]
+	}
+
+	fmt.Println("WARNING: File not supported, defaults will be used")
+	return "map"
 }
 
 func initFlags() string {
