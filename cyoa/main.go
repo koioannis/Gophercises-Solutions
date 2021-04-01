@@ -1,61 +1,39 @@
 package main
 
 import (
-	"encoding/json"
+	"flag"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"net/http"
-	"strings"
+	"os"
 )
 
-var t *template.Template
-var story map[string]Arc
+var templates *template.Template
 
 func main() {
-	story = parseJson()
+	filename := initFlags()
 
-	t, _ = template.ParseFiles("index.gohtml")
+	story, err := NewParser().parseJson("data\\" + filename)
+	if err != nil {
+		fmt.Println("Please provide a valid filename (make sure your json is under the data folder)")
+		os.Exit(0)
+	}
 
-	myHandler := NewMyHandler()
+	templates, _ = template.ParseFiles("views/index.gohtml", "views/notFound.gohtml")
 
+	myHandler := NewMyHandler(story)
+
+	fmt.Println()
+	fmt.Println("Server listening on port 3000")
 	http.ListenAndServe(":3000", myHandler)
 }
 
-func NewMyHandler() *MyHanlder {
-	return &MyHanlder{}
-}
+func initFlags() string {
+	inputFileMessage := "Provide the filename of the json file, including extension"
 
-type MyHanlder struct{}
+	var filename string
+	flag.StringVar(&filename, "i", "", inputFileMessage)
+	flag.Parse()
 
-func (mh *MyHanlder) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" {
-		t.Execute(w, story["intro"])
-	}
-
-	path := strings.Split(r.URL.Path, "/")[1]
-	t.Execute(w, story[path])
-}
-
-type Arc struct {
-	Title   string   `json:"title"`
-	Story   []string `json:"story"`
-	Options []Options
-}
-
-type Options struct {
-	Text string `json:"text"`
-	Arc  string `json:"arc"`
-}
-
-func parseJson() map[string]Arc {
-	var story map[string]Arc
-	data, err := ioutil.ReadFile(".\\data\\gopher.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	json.Unmarshal(data, &story)
-
-	return story
+	return filename
 }
