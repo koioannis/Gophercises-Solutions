@@ -8,4 +8,5 @@ This repo contains my solutions to the exercises.
 | Project     | Description 
 | :---       |    :----   
 | [CLI Quiz game](https://github.com/koioannis/Gophercises-Solutions/tree/main/quiz_game)      | A CLI Quiz Game that gets the questions and answers from a CSV File.
-| [URL Shortener](https://github.com/koioannis/Gophercises-Solutions/tree/main/url_shortener) | A URL Shortener that gets the  short & full urls from a yson or yaml file |
+| [URL Shortener](https://github.com/koioannis/Gophercises-Solutions/tree/main/url_shortener) | A URL Shortener that gets paths and urls from a yson or yaml file, parses them and then listens for the redirect to the specified path.|
+| [Choose your own adventure](https://github.com/koioannis/Gophercises-Solutions/tree/main/cyoa) | An HTML text based adventure game, created with go's html templates. |
