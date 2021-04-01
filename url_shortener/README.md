@@ -51,8 +51,7 @@ You can either build the app and run the executable or run the app via the go ru
 go build .
 ./url_shortener.exe
 
-```
-    or
+or
 
 ```sh
 go run .
