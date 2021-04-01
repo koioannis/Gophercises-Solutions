@@ -23,18 +23,17 @@ func getHandler(format string, filename string, fallback http.Handler) (http.Han
 		return nil, err
 	}
 
-	if format == "map" || format == "db" {
+	if format == "map" {
 		return buildHandler(parser, nil, fallback)
 	}
 
 	data, err := readFile(filename)
-	if err != nil  {
+	if err != nil {
 		parser, _ = factory.GetParser("map")
 	}
 
 	return buildHandler(parser, data, fallback)
 }
-
 
 func buildHandler(parser factory.Parser, data []byte, fallback http.Handler) (http.HandlerFunc, error) {
 	pathsToUrls, err := parser.Parse(data)

@@ -11,10 +11,6 @@ func GetParser(parser string) (Parser, error) {
 		return newYAMLParser(), nil
 	}
 
-	if parser == "db" {
-		return newDBParser(), nil
-	}
-
 	if parser == "map" {
 		return newMapParser(), nil
 	}
