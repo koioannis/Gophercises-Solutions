@@ -50,7 +50,7 @@ You can either build the app and run the executable or run the app via the go ru
 ```sh
 go build .
 ./url_shortener.exe
-
+```
 or
 
 ```sh
@@ -84,7 +84,7 @@ Json file should look like:
 ]
 ```
 ### Run the app
-**Note:** You can use either json or yaml files with the same `-i` flag, just make use you specify the file extension.
+**Note:** You can use either json or yaml files with the same `-i` flag, just make sure that you specify the file extension.
 
 If you were to use the go run command.
 ```sh
