@@ -40,7 +40,10 @@ func parseTag(node *html.Node, text *[]byte) {
 
 	if node.Type == html.TextNode {
 		*text = append(*text, []byte(node.Data)...)
-		*text = append(*text, ' ')
+
+		if !strings.HasSuffix(node.Data, " ") {
+			*text = append(*text, ' ')
+		}
 	}
 
 	for c := node.FirstChild; c != nil; c = c.NextSibling {

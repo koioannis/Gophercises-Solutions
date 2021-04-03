@@ -34,6 +34,27 @@ func main() {
 
 }
 
+func openHtmlFile(filename string) io.Reader {
+	file, err := os.Open("data/" + filename)
+	if err != nil {
+		panic(err)
+	}
+
+	return file
+}
+
+func writeJson(filename string, links []Link) {
+	jsonFile, err := json.MarshalIndent(links, "", "")
+	if err != nil {
+		panic(err)
+	}
+
+	err = ioutil.WriteFile(filename, jsonFile, 0644)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func initFlags() (string, string) {
 	inputFileDescription := "The html file you want to parse, including extension"
 	outFileDescription := "The json file you want to save the parsed tags, including extensions"
@@ -55,25 +76,4 @@ func initFlags() (string, string) {
 	}
 
 	return filename, outFilename
-}
-
-func openHtmlFile(filename string) io.Reader {
-	file, err := os.Open("data/" + filename)
-	if err != nil {
-		panic(err)
-	}
-
-	return file
-}
-
-func writeJson(filename string, links []Link) {
-	jsonFile, err := json.MarshalIndent(links, "", "")
-	if err != nil {
-		panic(err)
-	}
-
-	err = ioutil.WriteFile(filename, jsonFile, 0644)
-	if err != nil {
-		panic(err)
-	}
 }
