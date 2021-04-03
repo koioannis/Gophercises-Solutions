@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
-	"strings"
+	"path/filepath"
 
 	"golang.org/x/net/html"
 )
@@ -16,10 +18,9 @@ type Link struct {
 }
 
 func main() {
-	file, err := os.Open("data/ex1.html")
-	if err != nil {
-		panic(err)
-	}
+	inputFilename, outFilename := initFlags()
+
+	file := openHtmlFile(inputFilename)
 
 	doc, err := html.Parse(file)
 	if err != nil {
@@ -29,62 +30,50 @@ func main() {
 	var links []Link
 	DFS(doc, &links)
 
-	jsonFile, _ := json.MarshalIndent(links, "", "")
-
-	_ = ioutil.WriteFile("out.json", jsonFile, 0644)
+	writeJson(outFilename, links)
 
 }
 
-func DFS(node *html.Node, links *[]Link) {
-	href, text := parseNode(node)
-	if len(href) > 0 {
-		fmt.Println(href, text)
-		*links = append(*links, Link{Href: href, Text: text})
+func initFlags() (string, string) {
+	inputFileDescription := "The html file you want to parse, including extension"
+	outFileDescription := "The json file you want to save the parsed tags, including extensions"
+
+	var filename, outFilename string
+	flag.StringVar(&filename, "i", "", inputFileDescription)
+	flag.StringVar(&outFilename, "o", "", outFileDescription)
+
+	flag.Parse()
+
+	if filepath.Ext(filename) != ".html" {
+		fmt.Println("Please provide a valid input file (extension included)")
+		os.Exit(0)
 	}
 
-	for c := node.FirstChild; c != nil; c = c.NextSibling {
-		DFS(c, links)
+	if filepath.Ext(outFilename) != ".json" {
+		fmt.Println("Please provide a valid out file (extension included)")
+		os.Exit(0)
 	}
 
+	return filename, outFilename
 }
 
-func parseNode(node *html.Node) (string, string) {
-	if node.Type == html.ElementNode && node.Data == "a" {
-		href := strings.TrimSpace(parseAttr(node.Attr))
-
-		if node.FirstChild == nil {
-			return href, ""
-		}
-
-		var text []byte
-		parseTag(node, &text)
-
-		return href, string(text)
+func openHtmlFile(filename string) io.Reader {
+	file, err := os.Open("data/" + filename)
+	if err != nil {
+		panic(err)
 	}
 
-	return "", ""
+	return file
 }
 
-func parseTag(node *html.Node, text *[]byte) {
-
-	if node.Type == html.TextNode {
-		*text = append(*text, []byte(node.Data)...)
-		*text = append(*text, ' ')
+func writeJson(filename string, links []Link) {
+	jsonFile, err := json.MarshalIndent(links, "", "")
+	if err != nil {
+		panic(err)
 	}
 
-	for c := node.FirstChild; c != nil; c =	c.NextSibling {
-		parseTag(c, text)
+	err = ioutil.WriteFile(filename, jsonFile, 0644)
+	if err != nil {
+		panic(err)
 	}
-}
-
-func parseAttr(attr []html.Attribute) string {
-	var href string
-
-	for _, val := range attr {
-		if val.Key == "href" {
-			href = val.Val
-		}
-	}
-
-	return href
 }
