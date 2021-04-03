@@ -10,7 +10,6 @@ func DFS(node *html.Node, links *[]Link) {
 	href, text := parseNode(node)
 	if len(href) > 0 {
 		*links = append(*links, Link{Href: href, Text: text})
-		node = node.LastChild
 	}
 
 	for c := node.FirstChild; c != nil; c = c.NextSibling {
@@ -37,11 +36,10 @@ func parseNode(node *html.Node) (string, string) {
 }
 
 func parseTag(node *html.Node, text *[]byte) {
-
 	if node.Type == html.TextNode {
 		*text = append(*text, []byte(node.Data)...)
-
-		if !strings.HasSuffix(node.Data, " ") {
+		*text = []byte(strings.TrimSpace(string(*text)))
+		if !strings.HasSuffix(string(*text), " ") {
 			*text = append(*text, ' ')
 		}
 	}
