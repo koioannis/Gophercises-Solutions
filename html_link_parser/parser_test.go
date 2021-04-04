@@ -138,3 +138,26 @@ func Test_DFS_WhenGivenAnchorTagsWithNestedTags_ShouldReturnTheTextOfTheNestedTa
 		t.Errorf("Expected [%s] to equal [%s]", links, expected)
 	}
 }
+
+func Test_DFS_WhenGivenAnchorTagsWithNestedAnchorTags_ShouldNotReturnTheTextOfNested(t *testing.T) {
+	expected := []Link{
+		{
+			Href: "/parent",
+			Text: "This is text",
+		},
+		{
+			Href: "/nested",
+			Text: "This is nested text",
+		},
+	}
+
+	htmlString := `
+	<a href="/parent">This is text<a href="/nested">This is nested text</a></a>`
+	node := createNode(htmlString)
+
+	var links []Link
+	DFS(node, &links)
+	if !areEqual(expected, links) {
+		t.Errorf("Expected [%s] to equal [%s]", links, expected)
+	}
+}
