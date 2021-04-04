@@ -1,4 +1,4 @@
-package main
+package html_link_parser
 
 import (
 	"reflect"

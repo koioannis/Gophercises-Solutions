@@ -1,13 +1,13 @@
-package main
+package url_shortener
 
 import (
 	"io/ioutil"
-	"koioannis/gopherices/url_shortener/factory"
+	"koioannis/gophercises/url_shortener/factory"
 	"net/http"
 )
 
 func readFile(filename string) ([]byte, error) {
-	data, err := ioutil.ReadFile("data/" + filename)
+	data, err := ioutil.ReadFile("url_shortener/data/" + filename)
 	if err != nil {
 		return nil, err
 	}
@@ -15,7 +15,7 @@ func readFile(filename string) ([]byte, error) {
 	return data, nil
 }
 
-func getHandler(format string, filename string, fallback http.Handler) (http.HandlerFunc, error) {
+func GetHandler(format string, filename string, fallback http.Handler) (http.HandlerFunc, error) {
 	parser, err := factory.GetParser(format)
 	if err != nil || format == "map" {
 		parser, _ = factory.GetParser("map")

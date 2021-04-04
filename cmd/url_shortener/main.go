@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+
+	"koioannis/gophercises/url_shortener"
 )
 
 func main() {
@@ -13,7 +15,7 @@ func main() {
 	filename := initFlags()
 	format := getFileExt(filename)
 
-	handler, err := getHandler(format, filename, mux)
+	handler, err := url_shortener.GetHandler(format, filename, mux)
 	if err != nil {
 		fmt.Println("WARNING: File not supported, defaults will be used")
 	}

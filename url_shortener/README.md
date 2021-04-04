@@ -22,7 +22,6 @@ A simple url shortener that that gets urls from a yson or yaml file. For more de
 ### Clone the repo
 ```sh
 git clone https://github.com/koioannis/Gophercises-Solutions
-cd Gophercises-Solutions/url_shortener
 ```
 
 
@@ -48,13 +47,13 @@ You can either build the app and run the executable or run the app via the go ru
 
 
 ```sh
-go build .
+go build .\cmd\url_shortener\
 ./url_shortener.exe
 ```
 or
 
 ```sh
-go run .
+go run .\cmd\url_shortener\
 ```
 
   
@@ -88,15 +87,15 @@ Json file should look like:
 
 If you were to use the go run command.
 ```sh
-go run . -i youfile.json
+go run .\cmd\url_shortener\ -i youfile.json
 ```
 or 
 ```sh
-go run . -i youfile.yaml
+go run .\cmd\url_shortener\ -i youfile.yaml
 ```
 And with the build command
 ```sh
-go build .
+go build .\cmd\url_shortener\
 .\url_shortener.exe -i yourfile.json
 ```
 If you do not pass the `-i` flag or the file could not be found, 

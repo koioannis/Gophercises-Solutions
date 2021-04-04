@@ -1,4 +1,4 @@
-package main
+package cyoa
 
 import (
 	"encoding/json"
@@ -21,7 +21,7 @@ func NewParser() *Parser {
 	return &Parser{}
 }
 
-func (p Parser) parseJson(filepath string) (map[string]Arc, error) {
+func (p Parser) ParseJson(filepath string) (map[string]Arc, error) {
 	var story map[string]Arc
 	data, err := ioutil.ReadFile(filepath)
 	if err != nil {

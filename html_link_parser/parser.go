@@ -1,10 +1,15 @@
-package main
+package html_link_parser
 
 import (
 	"strings"
 
 	"golang.org/x/net/html"
 )
+
+type Link struct {
+	Href string `json:"href"`
+	Text string `json:"text"`
+}
 
 func DFS(node *html.Node, links *[]Link) {
 	href, text := parseNode(node)

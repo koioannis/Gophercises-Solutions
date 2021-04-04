@@ -14,8 +14,7 @@ import (
 
 func main()	{
 	filename, duration := initFlags()
-	workingDir, _ := os.Getwd()
-	questions := openAndParseCsv(workingDir + "\\data\\"+ filename + ".csv")
+	questions := openAndParseCsv("quiz\\data\\"+ filename + ".csv")
 	startGame(questions, duration)
 }
 

@@ -8,15 +8,11 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
 	"koioannis/gophercises/html_link_parser"
 
 	"golang.org/x/net/html"
 )
-
-type Link struct {
-	Href string `json:"href"`
-	Text string `json:"text"`
-}
 
 func main() {
 	inputFilename, outFilename := initFlags()
@@ -28,15 +24,15 @@ func main() {
 		panic(err)
 	}
 
-	var links []Link
-	DFS(doc, &links)
+	var links []html_link_parser.Link
+	html_link_parser.DFS(doc, &links)
 
 	writeJson(outFilename, links)
 
 }
 
 func openHtmlFile(filename string) io.Reader {
-	file, err := os.Open("data/" + filename)
+	file, err := os.Open("html_link_parser/data/" + filename)
 	if err != nil {
 		panic(err)
 	}
@@ -44,13 +40,14 @@ func openHtmlFile(filename string) io.Reader {
 	return file
 }
 
-func writeJson(filename string, links []Link) {
+func writeJson(filename string, links []html_link_parser.Link) {
 	jsonFile, err := json.MarshalIndent(links, "", "")
 	if err != nil {
 		panic(err)
 	}
 
-	err = ioutil.WriteFile(filename, jsonFile, 0644)
+	path := "html_link_parser/" + filename 
+	err = ioutil.WriteFile(path, jsonFile, 0644)
 	if err != nil {
 		panic(err)
 	}

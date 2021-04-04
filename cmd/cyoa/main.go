@@ -6,22 +6,22 @@ import (
 	"html/template"
 	"net/http"
 	"os"
-)
 
-var templates *template.Template
+	"koioannis/gophercises/cyoa"
+)
 
 func main() {
 	filename := initFlags()
 
-	story, err := NewParser().parseJson("data\\" + filename)
+	story, err := cyoa.NewParser().ParseJson("cyoa\\data\\" + filename)
 	if err != nil {
 		fmt.Println("Please provide a valid filename (make sure your json is under the data folder)")
 		os.Exit(0)
 	}
 
-	templates, _ = template.ParseFiles("views/index.gohtml", "views/notFound.gohtml")
+	templates, _ := template.ParseFiles("cyoa\\views\\index.gohtml", "cyoa\\views\\notFound.gohtml")
 
-	myHandler := NewMyHandler(story)
+	myHandler := cyoa.NewMyHandler(story, templates)
 
 	fmt.Println()
 	fmt.Println("Server listening on port 3000")
