@@ -11,3 +11,4 @@ This repo contains my solutions to the exercises.
 | [URL Shortener](https://github.com/koioannis/Gophercises-Solutions/tree/main/url_shortener) | A URL Shortener that gets paths and urls from a yson or yaml file, parses them and then listens for the redirect to the specified path.|
 | [Choose your own adventure](https://github.com/koioannis/Gophercises-Solutions/tree/main/cyoa) | An HTML text based adventure game, created with go's html templates. |
 | [HTML Link Parser](https://github.com/koioannis/Gophercises-Solutions/tree/main/html_link_parser) | Parses an HTML tree using DFS and extracts the `a` tags into a json |
+| [CLI Task Manager](https://github.com/koioannis/Gophercises-Solutions/tree/main/task) | A CLI tool that manages TODOs. Created with Cobra and BoltDB|

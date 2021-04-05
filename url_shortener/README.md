@@ -1,5 +1,5 @@
 
-# URL Shortener  ![language](https://img.shields.io/github/go-mod/go-version/koioannis/Gophercises-Solutions?filename=url_shortener%2Fgo.mod)
+# URL Shortener  ![language](https://img.shields.io/github/go-mod/go-version/koioannis/Gophercises-Solutions)
 
 
 A simple url shortener that that gets urls from a yson or yaml file. For more detailed information you should check [Gophercises](https://gophercises.com/).
