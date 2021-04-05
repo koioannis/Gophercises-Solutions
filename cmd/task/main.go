@@ -1,7 +1,7 @@
 package main
 
 import (
-	"koioannis/gophercises/task"
+	"koioannis/gophercises/task/commands"
 )
 
 func main() {
