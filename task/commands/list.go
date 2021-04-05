@@ -1,6 +1,9 @@
 package task
 
 import (
+	"fmt"
+	"koioannis/gophercises/task/services"
+
 	"github.com/spf13/cobra"
 )
 
@@ -11,9 +14,22 @@ func init() {
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Lists your current Todos",
-	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			cmd.Help()
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ts, err := services.NewTaskService()
+		if err != nil {
+			return err
 		}
+		defer ts.Close()
+
+		tasks, err := ts.GetAll()
+		if err != nil {
+			return err
+		}
+
+		for _, task := range tasks {
+			fmt.Printf("%v. %v\n", task.ID, task.Content)
+		}
+
+		return nil
 	},
 }

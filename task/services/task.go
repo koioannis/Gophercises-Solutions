@@ -2,15 +2,14 @@ package services
 
 import (
 	"encoding/binary"
-	"encoding/json"
 	"fmt"
 
 	bolt "go.etcd.io/bbolt"
 )
 
 type Task struct {
-	ID int
-	Content string 
+	ID      int
+	Content string
 }
 
 func NewTaskService() (*TaskService, error) {
@@ -54,22 +53,49 @@ func (ts *TaskService) Create(t *Task) error {
 
 		t.ID = int(id)
 
-		buf, err := json.Marshal(t)
-		if err != nil {
-			return err
-		}
-		
-		return b.Put(itob(t.ID), buf)
+		return b.Put(itob(t.ID), []byte(t.Content))
 	})
 }
+
+func (ts *TaskService) GetAll() ([]Task, error) {
+	var tasks []Task
+
+	err := ts.db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("Tasks"))
+
+		c := b.Cursor()
+
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			tasks = append(tasks, Task{
+				ID:      btoi(k),
+				Content: string(v),
+			})
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
+}
+
 
 func (ts *TaskService) Close() {
 	ts.db.Close()
 }
 
+// integer to bytes
 func itob(v int) []byte {
 	b := make([]byte, 8)
 
 	binary.BigEndian.PutUint64(b, uint64(v))
 	return b
+}
+
+// bytes to integer
+func btoi(b []byte) int {
+	return int(binary.BigEndian.Uint64(b))
 }
