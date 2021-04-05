@@ -48,7 +48,7 @@ func (ts *TaskService) Create(t *Task) error {
 
 		id, err := b.NextSequence()
 		if err != nil {
-			return err
+			return nil
 		}
 
 		t.ID = int(id)
@@ -82,6 +82,36 @@ func (ts *TaskService) GetAll() ([]Task, error) {
 	return tasks, nil
 }
 
+func (ts *TaskService) Remove(id int) (*Task, error) {
+	task := Task{
+		ID: id,
+	}
+
+	err := ts.db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("Tasks"))
+
+		task.Content = string(b.Get(itob(task.ID)))
+
+		err := b.Delete(itob(task.ID))
+		if err != nil {
+			return err
+		}
+
+
+		c := b.Cursor()
+		if _, v := c.First(); v == nil {
+			tx.DeleteBucket([]byte("Tasks"))
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &task, nil
+}
 
 func (ts *TaskService) Close() {
 	ts.db.Close()
