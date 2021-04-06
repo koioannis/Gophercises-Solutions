@@ -2,7 +2,7 @@ package url_shortener
 
 import (
 	"io/ioutil"
-	"koioannis/gophercises/url_shortener/factory"
+	"github.com/koioannis/gophercises-solutions/url_shortener/factory"
 	"net/http"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"koioannis/gophercises/task/templates"
+	"github.com/koioannis/gophercises-solutions/task/templates"
 
 	"github.com/spf13/cobra"
 )

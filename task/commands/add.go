@@ -2,7 +2,7 @@ package task
 
 import (
 	"fmt"
-	"koioannis/gophercises/task/services"
+	"github.com/koioannis/gophercises-solutions/task/services"
 	"strings"
 
 	"github.com/spf13/cobra"

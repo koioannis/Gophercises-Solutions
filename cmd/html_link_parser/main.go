@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"koioannis/gophercises/html_link_parser"
+	"github.com/koioannis/gophercises-solutions/html_link_parser"
 
 	"golang.org/x/net/html"
 )

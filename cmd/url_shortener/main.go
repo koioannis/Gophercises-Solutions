@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"koioannis/gophercises/url_shortener"
+	"github.com/koioannis/gophercises-solutions/url_shortener"
 )
 
 func main() {

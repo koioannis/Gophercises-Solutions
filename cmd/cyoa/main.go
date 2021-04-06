@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"koioannis/gophercises/cyoa"
+	"github.com/koioannis/gophercises-solutions/cyoa"
 )
 
 func main() {
